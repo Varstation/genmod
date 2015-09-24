@@ -72,8 +72,18 @@
         }, 
         {
             "location": "/commands/filter-variants/", 
-            "text": "", 
+            "text": "Filter Variants\n\n\nFilter variants based on some annotation from the INFO field of a vcf file.\n\n\nExamples\n\n\ngenmod -v filter examples/test_vcf_annotated.vcf -a 1000G_freq -t 0.01\n\n\n\n\nThis command will skip all variants that have a \n1000G_freq\n \n 0.01.\nBy default all variants that lack \n1000G_freq\n will be kept, this can be modified by the \n-d/--discard\n flag.\n\n\ngenmod -v filter examples/test_vcf_annotated.vcf -a CADD -t 7 --greater --discard\n\n\n\n\nHere we will filter out all variants that have annotation \nCADD\n less than 7 and all variants that miss the \nCADD\n flag.\n\n\nCommand\n\n\n$ genmod filter --help\nUsage: genmod filter [OPTIONS] \nvcf_file\n or -\n\n  Filter vcf variants.\n\n  Filter variants based on their annotation\n\nOptions:\n  -a, --annotation TEXT   Specify the info annotation to search for. Default\n                          1000GAF\n  -t, --threshold FLOAT   Threshold for filter variants. Default 0.05\n  -d, --discard           If variants without the annotation should be\n                          discarded\n  -g, --greater           If greater than threshold should be used instead of\n                          less thatn threshold.\n  -s, --silent            Do not print the variants.\n  -o, --outfile FILENAME  Specify the path to a file where results should be\n                          stored.\n  --help                  Show this message and exit.", 
             "title": "Filter Variants"
+        }, 
+        {
+            "location": "/commands/filter-variants/#filter-variants", 
+            "text": "Filter variants based on some annotation from the INFO field of a vcf file.  Examples  genmod -v filter examples/test_vcf_annotated.vcf -a 1000G_freq -t 0.01  This command will skip all variants that have a  1000G_freq    0.01.\nBy default all variants that lack  1000G_freq  will be kept, this can be modified by the  -d/--discard  flag.  genmod -v filter examples/test_vcf_annotated.vcf -a CADD -t 7 --greater --discard  Here we will filter out all variants that have annotation  CADD  less than 7 and all variants that miss the  CADD  flag.", 
+            "title": "Filter Variants"
+        }, 
+        {
+            "location": "/commands/filter-variants/#command", 
+            "text": "$ genmod filter --help\nUsage: genmod filter [OPTIONS]  vcf_file  or -\n\n  Filter vcf variants.\n\n  Filter variants based on their annotation\n\nOptions:\n  -a, --annotation TEXT   Specify the info annotation to search for. Default\n                          1000GAF\n  -t, --threshold FLOAT   Threshold for filter variants. Default 0.05\n  -d, --discard           If variants without the annotation should be\n                          discarded\n  -g, --greater           If greater than threshold should be used instead of\n                          less thatn threshold.\n  -s, --silent            Do not print the variants.\n  -o, --outfile FILENAME  Specify the path to a file where results should be\n                          stored.\n  --help                  Show this message and exit.", 
+            "title": "Command"
         }, 
         {
             "location": "/commands/sort-variants/", 
