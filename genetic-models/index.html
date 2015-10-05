@@ -192,6 +192,8 @@ Some chromosomes are only present in one copy in humans, here it is allowed to o
 <li>Variant is considered <em>de novo</em> if both parents are genotyped and do not carry the variant</li>
 <li>The variants following this modell will be annotated with <code>AD</code>or <code>AD_dn</code></li>
 </ul>
+<p><strong>Special Case:</strong> If the variant belongs to a gene that have been annotated 
+with reduced penetrance we will allow healthy carriers. (i.e. healthy individuals can be heterozygotes)</p>
 <h3 id="autosomal-compound-heterozygote">Autosomal Compound Heterozygote</h3>
 <p>This model includes pairs of exonic variants that are present within the same gene.
 <strong>The default behaviour of GENMOD is to look for compounds only in exonic/canonical splice sites</strong>.
@@ -231,9 +233,9 @@ If the user wants all variants in genes checked use the flag -gene/--whole_gene.
 <ul>
 <li>Variant has to be on chromosome X</li>
 <li>Affected males have to be het. or hom. alt. (het is theoretically not possible in males, but can occur due to Pseudo Autosomal Regions).</li>
+<li>Healthy males cannot carry the variant</li>
 <li>Affected females have to be hom. alt.</li>
 <li>Healthy females cannot be hom. alt.</li>
-<li>Healthy males cannot carry the variant</li>
 <li>If sex is male the variant is considered <em>de novo</em> if mother is genotyped and does not carry the variant</li>
 <li>If sex is female variant is considered <em>de novo</em> if not both parents carry the variant</li>
 <li>The variants following this modell will be annotated with <code>XR</code>or <code>XR_dn</code></li>
