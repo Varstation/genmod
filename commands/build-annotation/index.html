@@ -9,10 +9,10 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>Score Variants - genmod docs</title>
+	<title>Build References - genmod docs</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="../../css/highlight.css">
 
@@ -82,18 +82,6 @@
 
                         
                             
-<li class="active">
-    <a href="./">Score Variants</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../score-compounds/">Score Compounds</a>
-</li>
-
-                        
-                            
 <li >
     <a href="../filter-variants/">Filter Variants</a>
 </li>
@@ -102,6 +90,12 @@
                             
 <li >
     <a href="../sort-variants/">Sort Variants</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Build References</a>
 </li>
 
                         
@@ -120,12 +114,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../annotate-models/">
+                        <a rel="next" href="../sort-variants/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
-                    <li >
-                        <a rel="prev" href="../score-compounds/">
+                    <li class="disabled">
+                        <a rel="prev" >
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -150,11 +144,41 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
+        <li class="main active"><a href="#build-new-annotations-with-genmod">Build new annotations with genmod</a></li>
+        
+            <li><a href="#basic-command">Basic command</a></li>
+        
+            <li><a href="#overview">Overview</a></li>
+        
+    
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-</div>
+<h1 id="build-new-annotations-with-genmod">Build new annotations with genmod</h1>
+<h2 id="basic-command">Basic command</h2>
+<pre><code class="bash">$ genmod build --help
+Usage: genmod build [OPTIONS] ANNOTATION_FILE
+
+  Build a new annotation database
+
+  Build an annotation database from an annotation file.
+
+Options:
+  -o, --outdir PATH               Specify the path to a folder where the
+                                  annotation files should be stored.
+  -t, --annotation_type [bed|ccds|gtf|gene_pred|gff]
+                                  Specify the format of the annotation file.
+  --splice_padding INTEGER        Specify the the number of bases that the
+                                  exons should be padded with. Default is 2
+                                  bases.
+  -v, --verbose                   Increase output verbosity.
+  --help                          Show this message and exit.
+</code></pre>
+
+<h2 id="overview">Overview</h2>
+<p>The build command is used for building new annotations. This could be used if another gene defenition than default (refSeq) are preferred, if other regions than genes should be used to annotate compounds or if another organism than humans are used in the analysis.
+The supported formats are <code>bed, ccds, gtf, gene_pred, gff</code>. Small examples for the supported formats in <a href="https://github.com/moonso/genmod/blob/master/tests/conftest.py">conftest.py</a></p></div>
             
         </div>
 
