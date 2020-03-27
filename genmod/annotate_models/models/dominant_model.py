@@ -12,9 +12,17 @@ Copyright (c) 2013 __MyCompanyName__. All rights reserved.
 
 from __future__ import print_function
 
+import os
 import logging
 
 logger = logging.getLogger(__name__)
+
+output_log = "/media/media2/raw_data/trio/variants_inheritance_patterns.csv"
+
+if os.path.isfile(output_log):
+    output = open(output_log, "a")
+else:
+    output = open(output_log, "w")
 
 def check_dominant(variant, family, strict=False):
     """
@@ -56,6 +64,8 @@ def check_dominant(variant, family, strict=False):
     for individual in family.individuals: 
         # Check in all individuals what genotypes that are in the trio based 
         # of the individual picked.
+        affected = False
+        genotyped = False
         logger.debug("Checking autosomal dominant pattern for variant {0},"\
         " individual: {1}".format(
             variant.get('variant_id', None),
@@ -76,11 +86,29 @@ def check_dominant(variant, family, strict=False):
                     return False
         
         elif family.individuals[individual].affected:
+            affected = True
             logger.debug("Individual {0} is affected".format(individual))
             # The case when the individual is sick
             if individual_genotype.genotyped:
+                genotyped = True
                 if not individual_genotype.heterozygote:
                     return False
-    
+    if affected and genotyped:
+        output.write("{},Healthy individuals without variant and affected individual has heterozygous variant".format(
+            variant.get('variant_id', None)
+        ))
+        output.close()
+    elif genotyped:
+
+        output.write("{},Healthy individuals without variant and affected individual is not genotyped".format(
+            variant.get('variant_id', None)
+        ))
+        output.close()
+    else:
+
+        output.write("{},Healthy individuals without variant and no affected individual".format(
+            variant.get('variant_id', None)
+        ))
+        output.close()
     return True
 
