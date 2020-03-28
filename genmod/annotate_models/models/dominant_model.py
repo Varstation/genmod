@@ -17,13 +17,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-output_log = "/media/media2/raw_data/trio/variants_inheritance_patterns.csv"
-
-if os.path.isfile(output_log):
-    output = open(output_log, "a")
-else:
-    output = open(output_log, "w")
-
 def check_dominant(variant, family, strict=False):
     """
     Check if the variant follows the autosomal dominant (AD) pattern in 
@@ -60,6 +53,12 @@ def check_dominant(variant, family, strict=False):
         bool: depending on if the model is followed in these indivduals
     
     """
+    output_log = "/media/genomika/DADOS/Dados/Projects/trio/fork_genmod/variants_inheritance_patterns.csv" #"/media/media2/raw_data/trio/variants_inheritance_patterns.csv"
+
+    if os.path.isfile(output_log):
+        output = open(output_log, "a")
+    else:
+        output = open(output_log, "w")
     
     for individual in family.individuals: 
         # Check in all individuals what genotypes that are in the trio based 
@@ -74,6 +73,7 @@ def check_dominant(variant, family, strict=False):
         individual_genotype = variant['genotypes'][individual]
         if strict:
             if not individual_genotype.genotyped:
+                output.close()
                 return False
         # The case where the individual is healthy
         if family.individuals[individual].healthy:
@@ -81,8 +81,10 @@ def check_dominant(variant, family, strict=False):
             if individual_genotype.has_variant:
                 if variant.get('reduced_penetrance', False):
                     if individual_genotype.homo_alt:
+                        output.close()
                         return False
                 else:
+                    output.close()
                     return False
         
         elif family.individuals[individual].affected:
@@ -92,22 +94,16 @@ def check_dominant(variant, family, strict=False):
             if individual_genotype.genotyped:
                 genotyped = True
                 if not individual_genotype.heterozygote:
+                    output.close()
                     return False
 
-    print(affected, genotyped)
+    # print(affected, genotyped)
     if affected and genotyped:
-        output.write("{},Healthy individuals without variant and affected individual has heterozygous variant\n".format(
-            variant.get('variant_id', None)
-        ))
+        output.write("{},Healthy individuals without variant and affected individual has heterozygous variant\n".format(variant.get('variant_id', None)))
     elif genotyped:
-        output.write("{},Healthy individuals without variant and affected individual is not genotyped\n".format(
-            variant.get('variant_id', None)
-        ))
+        output.write("{},Healthy individuals without variant and affected individual is not genotyped\n".format(variant.get('variant_id', None)))
     else:
-        output.write("{},Healthy individuals without variant and no affected individual\n".format(
-            variant.get('variant_id', None)
-        ))
-
+        output.write("{},Healthy individuals without variant and no affected individual\n".format(variant.get('variant_id', None)))
     output.close()
     return True
 
