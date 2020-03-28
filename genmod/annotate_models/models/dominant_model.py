@@ -59,12 +59,14 @@ def check_dominant(variant, family, strict=False):
         output = open(output_log, "a")
     else:
         output = open(output_log, "w")
-    
+
+    affected = False
+    genotyped = False
+
     for individual in family.individuals: 
         # Check in all individuals what genotypes that are in the trio based 
         # of the individual picked.
-        affected = False
-        genotyped = False
+
         logger.debug("Checking autosomal dominant pattern for variant {0},"\
         " individual: {1}".format(
             variant.get('variant_id', None),
@@ -97,7 +99,6 @@ def check_dominant(variant, family, strict=False):
                     output.close()
                     return False
 
-    # print(affected, genotyped)
     if affected and genotyped:
         output.write("{},Healthy individuals without variant and affected individual has heterozygous variant\n".format(variant.get('variant_id', None)))
     elif genotyped:
