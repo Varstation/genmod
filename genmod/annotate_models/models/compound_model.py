@@ -46,6 +46,15 @@ def check_compounds(variant_1, variant_2, family, intervals, phased):
     # individual picked.
     logger = logging.getLogger(__name__)
     
+    output_log = "/media/genomika/DADOS/Dados/Projects/trio/fork_genmod/variants_inheritance_patterns.csv" # "/media/media2/raw_data/trio/variants_inheritance_patterns.csv" #
+
+    if os.path.isfile(output_log):
+        output = open(output_log, "a")
+    else:
+        output = open(output_log, "w")
+
+    affected = False
+
     for individual_id in family.individuals:
         logger.debug("Check compounds for individual {0}".format(individual_id))
         individual = family.individuals[individual_id]
@@ -105,6 +114,7 @@ def check_compounds(variant_1, variant_2, family, intervals, phased):
         #for these variants
         # So we only need to know if the variants are on the same phase
         elif individual.affected:
+            affected = True
             #If the individual is sick and phased it has to have one variant on
             # each allele
             if phased:
@@ -116,7 +126,10 @@ def check_compounds(variant_1, variant_2, family, intervals, phased):
                     if ((genotype_1.allele_1 == genotype_2.allele_1) or 
                         (genotype_1.allele_2 == genotype_2.allele_2)):
                         return False
-    
+    if affected and not phased:
+        output.write("{},Healthy individuals without 2 variants and affected individual is homozygote or heterozygote alternative for 2 variants\n".format(variant_1.get('variant_id', None)))
+        output.write("{},Healthy individuals without 2 variants and affected individual is homozygote or heterozygote alternative for 2 variants\n".format(variant_2.get('variant_id', None)))
+    output.close()
     return True
 
 def main():

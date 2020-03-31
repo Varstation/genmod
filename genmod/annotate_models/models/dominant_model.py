@@ -53,7 +53,7 @@ def check_dominant(variant, family, strict=False):
         bool: depending on if the model is followed in these indivduals
     
     """
-    output_log = "/media/media2/raw_data/trio/variants_inheritance_patterns.csv" #"/media/genomika/DADOS/Dados/Projects/trio/fork_genmod/variants_inheritance_patterns.csv" #
+    output_log = "/media/genomika/DADOS/Dados/Projects/trio/fork_genmod/variants_inheritance_patterns.csv" # "/media/media2/raw_data/trio/variants_inheritance_patterns.csv" 
 
     if os.path.isfile(output_log):
         output = open(output_log, "a")
@@ -101,7 +101,7 @@ def check_dominant(variant, family, strict=False):
 
     if affected and genotyped:
         output.write("{},Healthy individuals without variant and affected individual has heterozygous variant\n".format(variant.get('variant_id', None)))
-    elif genotyped:
+    elif affected:
         output.write("{},Healthy individuals without variant and affected individual is not genotyped\n".format(variant.get('variant_id', None)))
     else:
         output.write("{},Healthy individuals without variant and no affected individual\n".format(variant.get('variant_id', None)))

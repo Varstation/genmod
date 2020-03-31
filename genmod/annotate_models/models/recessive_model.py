@@ -46,6 +46,19 @@ def check_recessive(variant, family, strict):
         bool: depending on if the model is followed in these indivduals
     
     """
+
+    output_log = "/media/genomika/DADOS/Dados/Projects/trio/fork_genmod/variants_inheritance_patterns.csv" # "/media/media2/raw_data/trio/variants_inheritance_patterns.csv" #
+
+    if os.path.isfile(output_log):
+        output = open(output_log, "a")
+    else:
+        output = open(output_log, "w")
+
+    affected = False
+    genotyped = False
+
+    affected = False
+    genotyped = False
     for individual in family.individuals:
         individual_genotype = variant['genotypes'][individual]
         if strict:
@@ -60,12 +73,22 @@ def check_recessive(variant, family, strict):
                 
         # The case when the individual is sick:
         elif family.individuals[individual].affected:
+            affected = True
         # In the case of a sick individual it must be homozygote alternative 
         # for Autosomal recessive to be true.
         # Also, we can not exclude the model if no call.
             if individual_genotype.genotyped:
+                genotyped = True
                 if not individual_genotype.homo_alt:
                     return False
+    
+    if affected and genotyped:
+        output.write("{},Healthy individuals not homozygous and affected individual is homozygote alternative\n".format(variant.get('variant_id', None)))
+    elif affected:
+        output.write("{},Healthy individuals not homozygous and affected individual is not genotyped\n".format(variant.get('variant_id', None)))
+    else:
+        output.write("{},Healthy individuals without variant and no affected individual\n".format(variant.get('variant_id', None)))
+    output.close()
     
     return True
 

@@ -11,6 +11,7 @@ Copyright (c) 2013 __MoonsoInc__. All rights reserved.
 
 from __future__ import print_function
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -50,6 +51,16 @@ def check_X_recessive(variant, family, strict=False):
         bool: depending on if the model is followed in these indivduals
     
     """
+    output_log = "/media/genomika/DADOS/Dados/Projects/trio/fork_genmod/variants_inheritance_patterns.csv" # "/media/media2/raw_data/trio/variants_inheritance_patterns.csv" #
+
+    if os.path.isfile(output_log):
+        output = open(output_log, "a")
+    else:
+        output = open(output_log, "w")
+
+    affected = False
+    genotyped = False
+    female = False
     
     for individual in family.individuals:
         # Get the genotype for this variant for this individual
@@ -72,14 +83,26 @@ def check_X_recessive(variant, family, strict=False):
         
         # The case when the individual is sick
         elif family.individuals[individual].affected:
-        #If the individual is sick and homozygote ref it can not be x-recessive
+            affected = True
+            # If the individual is sick and homozygote ref it can not be x-recessive
             if individual_genotype.genotyped:
+                genotyped = True
                 if individual_genotype.homo_ref:
                     return False
-        # Women have to be hom alt to be sick (almost allways carriers)
+                # Women have to be hom alt to be sick (almost allways carriers)
                 elif family.individuals[individual].sex == 2:
+                    female = True
                     if not individual_genotype.homo_alt:
                         return False
+    if affected and genotyped and female:
+        output.write("{},Healthy individuals are not genotyped or is female het or is male without variant and affected individual is female homozygote alternative\n".format(variant.get('variant_id', None)))
+    elif affected and genotyped:
+        output.write("{},Healthy individuals are not genotyped or is female het or is male without variant and affected individual is male with heterozygous variant\n".format(variant.get('variant_id', None)))
+    elif affected:
+        output.write("{},Healthy individuals are not genotyped or is female het or is male without variant and affected individual is not genotyped\n".format(variant.get('variant_id', None)))
+    else:
+        output.write("{},Healthy individuals without variant and no affected individual\n".format(variant.get('variant_id', None)))
+    output.close()
     return True
 
 def check_X_dominant(variant, family, strict=False):
@@ -117,6 +140,16 @@ def check_X_dominant(variant, family, strict=False):
         bool: depending on if the model is followed in these indivduals
     
     """
+    output_log = "/media/genomika/DADOS/Dados/Projects/trio/fork_genmod/variants_inheritance_patterns.csv" # "/media/media2/raw_data/trio/variants_inheritance_patterns.csv" #
+
+    if os.path.isfile(output_log):
+        output = open(output_log, "a")
+    else:
+        output = open(output_log, "w")
+
+    affected = False
+    genotyped = False
+
     for individual in family.individuals:
         # Get the genotype for this variant for this individual
         individual_genotype = variant['genotypes'][individual]
@@ -138,9 +171,19 @@ def check_X_dominant(variant, family, strict=False):
         
         # The case when the individual is sick
         elif family.individuals[individual].affected:
+            affected = True
         # If the individual is sick and homozygote ref it 
         # can not be x-linked-dominant
             if individual_genotype.genotyped:
+                genotyped = True
                 if individual_genotype.homo_ref:
                     return False
+
+    if affected and genotyped:
+        output.write("{},Healthy individuals are female heterozigous or male without variant and affected individual is homozygote or heterozygote alternative\n".format(variant.get('variant_id', None)))
+    elif affected:
+        output.write("{},Healthy individuals are female heterozigous or male without variant and affected individual is not genotyped\n".format(variant.get('variant_id', None)))
+    else:
+        output.write("{},Healthy individuals without variant and no affected individual\n".format(variant.get('variant_id', None)))
+    output.close()
     return True
