@@ -91,11 +91,15 @@ def check_genetic_models(variant_batch, families, phased = False,
                        genetic models
         
     """
+    output_log = "/media/genomika/DADOS/Dados/Projects/trio/fork_genmod/batch_variant.csv"
+    if os.path.isfile(output_log):
+        output = open(output_log, "a")
+    else:
+        output = open(output_log, "w")
     # A variant batch is a dictionary on the form 
     # {variant_id:variant_dict, variant_2_id:variant_dict_2, ...}
     logger = logging.getLogger(__name__)
     intervals = variant_batch.pop('haploblocks', {})
-    
     # We check the genetic models for one family at a time
     for family_id in families:
         logger.debug("Checking genetic models for family {0}".format(
@@ -201,7 +205,6 @@ def check_genetic_models(variant_batch, families, phased = False,
                             )
             
         # Now check the compound models:
-            
         if len(compound_candidates) > 1:
             for pair in generate_pairs(compound_candidates):
             # If the variants in the pair belong to the same gene we check for compounds:
@@ -235,13 +238,12 @@ def check_genetic_models(variant_batch, families, phased = False,
                         
                         if (variant_1['inheritance_models'][family_id]['AR_comp'] or 
                             variant_1['inheritance_models'][family_id]['AR_comp_dn']):
-                            
                             variant_1['compounds'][family_id].add(pair[1])
 
                         if (variant_2['inheritance_models'][family_id]['AR_comp'] or 
-                            variant_2['inheritance_models'][family_id]['AR_comp_dn']):
-                            
+                            variant_2['inheritance_models'][family_id]['AR_comp_dn']):                            
                             variant_2['compounds'][family_id].add(pair[0])
+    output.close()
     return
 
 def check_compound_candidate(variant, family, strict):
@@ -341,6 +343,13 @@ def check_parents(model, individual_id, family, variant, variant_2={},
         strict  : Bool
     
     """
+    output_log = "/media/genomika/DADOS/Dados/Projects/trio/fork_genmod/compound.csv"
+
+    if os.path.isfile(output_log):
+        output = open(output_log, "a")
+    else:
+        output = open(output_log, "w")
+
     sex = family.individuals[individual_id].sex
     family_id = family.family_id
     
@@ -445,28 +454,26 @@ def check_parents(model, individual_id, family, variant, variant_2={},
         
         # One of the variants must come from father and one from mother
         if (len(parent_genotypes) == 2 and len(parent_genotypes_2) == 2):
-            
             # If both parents are genotyped and one of them are homozygote reference for both variants
             # the pair will be considered AR compound de novo
             
-            if ((mother_genotype.genotyped and mother_genotype_2.genotyped) and
-                father_genotype.genotyped and father_genotype_2.genotyped):
+            # if ((mother_genotype.genotyped and mother_genotype_2.genotyped) and
+            #     father_genotype.genotyped and father_genotype_2.genotyped):
 
-                # if not both parents have one of the variants it is de novo
-                if not ((mother_genotype.has_variant or mother_genotype_2.has_variant) and 
-                        (father_genotype.has_variant or father_genotype_2.has_variant)):
-                    variant['inheritance_models'][family_id]['AR_comp_dn'] = True
-                    variant_2['inheritance_models'][family_id]['AR_comp_dn'] = True
-                
-                else:
-                    
-                    variant['inheritance_models'][family_id]['AR_comp'] = True
-                    variant_2['inheritance_models'][family_id]['AR_comp'] = True
+            # if not both parents have one of the variants it is de novo
+            if not ((mother_genotype.has_variant or mother_genotype_2.has_variant) and 
+                    (father_genotype.has_variant or father_genotype_2.has_variant)):
+                variant['inheritance_models'][family_id]['AR_comp_dn'] = True
+                variant_2['inheritance_models'][family_id]['AR_comp_dn'] = True
+            
+            else:
+                variant['inheritance_models'][family_id]['AR_comp'] = True
+                variant_2['inheritance_models'][family_id]['AR_comp'] = True
             
         elif not strict:
             variant['inheritance_models'][family_id]['AR_comp_dn'] = True
             variant_2['inheritance_models'][family_id]['AR_comp_dn'] = True
             variant['inheritance_models'][family_id]['AR_comp'] = True
             variant_2['inheritance_models'][family_id]['AR_comp'] = True
-            
+    output.close()    
     return
