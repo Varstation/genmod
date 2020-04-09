@@ -95,13 +95,13 @@ def check_X_recessive(variant, family, strict=False):
                     if not individual_genotype.homo_alt:
                         return False
     if affected and genotyped and female:
-        output.write("{},Healthy individuals are not genotyped or is female het or is male without variant and affected individual is female homozygote alternative\n".format(variant.get('variant_id', None)))
+        output.write("{},Parents are not genotyped or is female het or is male without variant and offspring is female homozygote alternative\n".format(variant.get('variant_id', None)))
     elif affected and genotyped:
-        output.write("{},Healthy individuals are not genotyped or is female het or is male without variant and affected individual is male with heterozygous variant\n".format(variant.get('variant_id', None)))
+        output.write("{},Parents are not genotyped or is female het or is male without variant and offspring is male with heterozygous variant\n".format(variant.get('variant_id', None)))
     elif affected:
-        output.write("{},Healthy individuals are not genotyped or is female het or is male without variant and affected individual is not genotyped\n".format(variant.get('variant_id', None)))
+        output.write("{},Parents are not genotyped or is female het or is male without variant and offspring is not genotyped\n".format(variant.get('variant_id', None)))
     else:
-        output.write("{},Healthy individuals without variant and no affected individual\n".format(variant.get('variant_id', None)))
+        output.write("{},Parents without variant and no affected individual\n".format(variant.get('variant_id', None)))
     output.close()
     return True
 
@@ -180,10 +180,10 @@ def check_X_dominant(variant, family, strict=False):
                     return False
 
     if affected and genotyped:
-        output.write("{},Healthy individuals are female heterozigous or male without variant and affected individual is homozygote or heterozygote alternative\n".format(variant.get('variant_id', None)))
+        output.write("{},Mother heterozigous alt or father without variant and offspring is homozygote or heterozygote alternative\n".format(variant.get('variant_id', None)))
     elif affected:
-        output.write("{},Healthy individuals are female heterozigous or male without variant and affected individual is not genotyped\n".format(variant.get('variant_id', None)))
+        output.write("{},Mother heterozigous alt or father without variant and offspring is not genotyped\n".format(variant.get('variant_id', None)))
     else:
-        output.write("{},Healthy individuals without variant and no affected individual\n".format(variant.get('variant_id', None)))
+        output.write("{},Parents without variant and no affected individual\n".format(variant.get('variant_id', None)))
     output.close()
     return True

@@ -100,11 +100,11 @@ def check_dominant(variant, family, strict=False):
                     return False
 
     if affected and genotyped:
-        output.write("{},Healthy individuals without variant and affected individual has heterozygous variant\n".format(variant.get('variant_id', None)))
+        output.write("{},Parents without variant and offspring has heterozygous variant\n".format(variant.get('variant_id', None)))
     elif affected:
-        output.write("{},Healthy individuals without variant and affected individual is not genotyped\n".format(variant.get('variant_id', None)))
+        output.write("{},Parents without variant and offspring is not genotyped\n".format(variant.get('variant_id', None)))
     else:
-        output.write("{},Healthy individuals without variant and no affected individual\n".format(variant.get('variant_id', None)))
+        output.write("{},Parents without variant and no offspring\n".format(variant.get('variant_id', None)))
     output.close()
     return True
 

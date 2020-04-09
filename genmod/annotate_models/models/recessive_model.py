@@ -83,11 +83,11 @@ def check_recessive(variant, family, strict):
                     return False
     
     if affected and genotyped:
-        output.write("{},Healthy individuals not homozygous and affected individual is homozygote alternative\n".format(variant.get('variant_id', None)))
+        output.write("{},Parents not homozygous and offspring is homozygote alternative\n".format(variant.get('variant_id', None)))
     elif affected:
-        output.write("{},Healthy individuals not homozygous and affected individual is not genotyped\n".format(variant.get('variant_id', None)))
+        output.write("{},Parents not homozygous and offspring is not genotyped\n".format(variant.get('variant_id', None)))
     else:
-        output.write("{},Healthy individuals without variant and no affected individual\n".format(variant.get('variant_id', None)))
+        output.write("{},Parents without variant and no offspring\n".format(variant.get('variant_id', None)))
     output.close()
     
     return True
