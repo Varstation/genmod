@@ -127,8 +127,8 @@ def check_compounds(variant_1, variant_2, family, intervals, phased):
                         (genotype_1.allele_2 == genotype_2.allele_2)):
                         return False
     if affected and not phased:
-        output.write("{},Parents without 2 variants in conjunction and offspring is homozygote or heterozygote alternative for 2 variants in conjunction\n".format(variant_1.get('variant_id', None)))
-        output.write("{},Parents without 2 variants in conjunction and offspring is homozygote or heterozygote alternative for 2 variants in conjunction\n".format(variant_2.get('variant_id', None)))
+        output.write("{},Parents without 2 variants in conjunction and offspring is heterozygote alternative for 2 variants minimum in conjunction\n".format(variant_1.get('variant_id', None)))
+        output.write("{},Parents without 2 variants in conjunction and offspring is heterozygote alternative for 2 variants minimum in conjunction\n".format(variant_2.get('variant_id', None)))
     output.close()
     return True
 
