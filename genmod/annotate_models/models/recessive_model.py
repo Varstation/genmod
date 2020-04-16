@@ -47,7 +47,7 @@ def check_recessive(variant, family, strict):
     
     """
 
-    output_log = "/media/genomika/DADOS/Dados/Projects/trio/fork_genmod/variants_inheritance_patterns.csv" # "/media/media2/raw_data/trio/variants_inheritance_patterns.csv" #
+    output_log = "/media/media2/raw_data/trio/git_genmod/variants_inheritance_patterns.csv" # "/media/genomika/DADOS/Dados/Projects/trio/fork_genmod/variants_inheritance_patterns.csv" 
 
     if os.path.isfile(output_log):
         output = open(output_log, "a")
