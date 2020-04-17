@@ -343,12 +343,6 @@ def check_parents(model, individual_id, family, variant, variant_2={},
         strict  : Bool
     
     """
-    output_log = "/media/genomika/DADOS/Dados/Projects/trio/fork_genmod/compound.csv"
-
-    if os.path.isfile(output_log):
-        output = open(output_log, "a")
-    else:
-        output = open(output_log, "w")
 
     sex = family.individuals[individual_id].sex
     family_id = family.family_id
@@ -474,6 +468,5 @@ def check_parents(model, individual_id, family, variant, variant_2={},
             variant['inheritance_models'][family_id]['AR_comp_dn'] = True
             variant_2['inheritance_models'][family_id]['AR_comp_dn'] = True
             variant['inheritance_models'][family_id]['AR_comp'] = True
-            variant_2['inheritance_models'][family_id]['AR_comp'] = True
-    output.close()    
+            variant_2['inheritance_models'][family_id]['AR_comp'] = True  
     return
