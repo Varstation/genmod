@@ -97,6 +97,14 @@ def models(context, variant_file, family_file, family_type, reduced_penetrance,
     
     variant_file = get_file_handle(variant_file)
     ###########################################################################
+    output_log = "/media/media2/raw_data/trio/git_genmod/variants_inheritance_patterns.csv"
+
+    if os.path.isfile(output_log):
+        output = open(output_log, "a")
+    else:
+        output = open(output_log, "w")
+    output.write("variant annotator in \n")
+    output.close()
     
     logger.info("Running GENMOD annotate models version {0}".format(__version__))
     logger.debug("Arguments: {0}".format(', '.join(argument_list)))
