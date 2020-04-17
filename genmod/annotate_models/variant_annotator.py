@@ -130,14 +130,7 @@ class VariantAnnotator(Process):
                     
 
             # Check the genetic models for all variants in the batch
-            output_log = "/media/media2/raw_data/trio/git_genmod/variants_inheritance_patterns.csv"
 
-            if os.path.isfile(output_log):
-                output = open(output_log, "a")
-            else:
-                output = open(output_log, "w")
-            output.write("variant annotator in \n")
-            output.close()
             check_genetic_models(
                 variant_batch = variant_batch,
                 families = self.families,
