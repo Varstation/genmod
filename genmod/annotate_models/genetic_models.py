@@ -91,11 +91,6 @@ def check_genetic_models(variant_batch, families, phased = False,
                        genetic models
         
     """
-    output_log = "/media/genomika/DADOS/Dados/Projects/trio/fork_genmod/batch_variant.csv"
-    if os.path.isfile(output_log):
-        output = open(output_log, "a")
-    else:
-        output = open(output_log, "w")
     # A variant batch is a dictionary on the form 
     # {variant_id:variant_dict, variant_2_id:variant_dict_2, ...}
     logger = logging.getLogger(__name__)
@@ -243,7 +238,6 @@ def check_genetic_models(variant_batch, families, phased = False,
                         if (variant_2['inheritance_models'][family_id]['AR_comp'] or 
                             variant_2['inheritance_models'][family_id]['AR_comp_dn']):                            
                             variant_2['compounds'][family_id].add(pair[0])
-    output.close()
     return
 
 def check_compound_candidate(variant, family, strict):
