@@ -46,7 +46,7 @@ def check_compounds(variant_1, variant_2, family, intervals, phased):
     # individual picked.
     logger = logging.getLogger(__name__)
     
-    output_log = "/media/genomika/DADOS/Dados/Projetos/trio/git_genmod/variants_inheritance_patterns.csv" 
+    output_log = "/media/genomika/DADOS/Dados/Projetos/trio/TRIO_20200331_EXOMA_R105/variants_inheritance_patterns.csv" 
 
     if os.path.isfile(output_log):
         output = open(output_log, "a")

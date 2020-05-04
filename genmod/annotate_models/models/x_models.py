@@ -51,7 +51,7 @@ def check_X_recessive(variant, family, strict=False):
         bool: depending on if the model is followed in these indivduals
     
     """
-    output_log = "/media/genomika/DADOS/Dados/Projetos/trio/git_genmod/variants_inheritance_patterns.csv"
+    output_log = "/media/genomika/DADOS/Dados/Projetos/trio/TRIO_20200331_EXOMA_R105/variants_inheritance_patterns.csv"
 
     if os.path.isfile(output_log):
         output = open(output_log, "a")
@@ -140,7 +140,7 @@ def check_X_dominant(variant, family, strict=False):
         bool: depending on if the model is followed in these indivduals
     
     """
-    output_log = "/media/genomika/DADOS/Dados/Projetos/trio/git_genmod/variants_inheritance_patterns.csv"
+    output_log = "/media/genomika/DADOS/Dados/Projetos/trio/TRIO_20190701_EXOMA_reanalise_RVSPvariants_inheritance_patterns.csv"
 
     if os.path.isfile(output_log):
         output = open(output_log, "a")
