@@ -141,7 +141,8 @@ def check_X_dominant(variant, family, strict=False):
         bool: depending on if the model is followed in these indivduals
     
     """
-    output_log = "/media/genomika/DADOS/Dados/Projetos/trio/TRIO_20190701_EXOMA_reanalise_RVSPvariants_inheritance_patterns.csv"
+    path = os.path.abspath(os.getcwd())
+    output_log = os.path.join(path, "variants_inheritance_patterns.csv")
 
     if os.path.isfile(output_log):
         output = open(output_log, "a")
