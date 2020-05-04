@@ -47,7 +47,8 @@ def check_recessive(variant, family, strict):
     
     """
 
-    output_log = "/media/genomika/DADOS/Dados/Projetos/trio/TRIO_20200331_EXOMA_R105/variants_inheritance_patterns.csv"
+    path = os.path.abspath(os.getcwd())
+    output_log = os.path.join(path, "variants_inheritance_patterns.csv")
 
     if os.path.isfile(output_log):
         output = open(output_log, "a")
